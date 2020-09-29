@@ -1,31 +1,30 @@
 <template>
-  <div>{{ pokeapi.results }}
-    <ul>
-      <li v-for="(item, index) in pokeapi" :key="index">
-       <p>{{index+1}} {{item.name}}</p>
-       <p>{{item.url}}</p>
-       <div>
-         
-       </div>
-      </li>
-    </ul>
-    <form>
-      <select :input="feachGeneration(generation)" v-model="generation">
-        <option v-for="(item, index) in pokeapi" :key="index" :value="index+1" :selected="index == 0">
-          {{item.name}}
-        </option>
-      </select>
-    </form>
-    <p>
-      {{ generation }}
-      {{ bodyGeneration }}
-    </p>
+  <div class="body-container">
+    <Header></Header>
+    <div class="container">
+      <form>
+        <select @click="feachGeneration(generation)" v-model="generation">
+          <option v-for="(item, index) in pokeapi" :key="index" :value="index+1">
+            {{item.name}}
+          </option>
+        </select>
+      </form>
+      <div>
+        {{ bodyGeneration }}
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+
+import Header from './Header'
+
 export default {
   name: 'Content',
+  components: {
+    Header
+  },
   data(){
     return{
       pokeapi: [],
@@ -45,13 +44,17 @@ export default {
       return data
     },
     async feachGeneration(id){
-      const data = await fetch(`https://pokeapi.co/api/v2/generation/${id}`)
-      .then( res => res.json())
-      .then( res => {
-        this.bodyGeneration = res
-        console.log(this.bodyGeneration)
-      })
-      return data
+      if(id != null){
+        const data = await fetch(`https://pokeapi.co/api/v2/generation/${id}`)
+        .then( res => res.json())
+        .then( res => {
+          this.bodyGeneration = res
+          console.log(this.bodyGeneration)
+        })
+        return data
+      }else{
+        this.bodyGeneration = ''
+      }
     }
   },
   created(){
