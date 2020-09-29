@@ -1,6 +1,10 @@
 body, h1, h2, p{
+  font-family: 'Press Start 2P', cursive;
   margin: 0px;
   padding: 0px;
   outline: none;
   box-sizing: border-box;
+}
+li{
+  list-style: none;
 }
