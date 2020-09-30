@@ -2,6 +2,7 @@
   <footer class="footer-container">
     <div class="pokemon">
       <img :src="img.pokemon" alt="pokedex">
+      <span></span>
     </div>
   </footer>
 </template>
@@ -34,8 +35,17 @@ export default {
   height: 100px;
 }
 .pokemon{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   position: relative;
   animation: pokemon 300ms infinite ease;
+}
+span{
+  margin-left: 1.5rem;
+  max-width: 50px;
+  height: 1px;
+  box-shadow: 0px 4px 6px 0 rgba(0, 0, 0, 0.3), 0px 3px 15px 0 rgba(0, 0, 0, 0.3);
 }
 
 @keyframes pokemon {
@@ -43,4 +53,5 @@ export default {
   50%  {top: -10px;}
   100% {top: 10px;}
 }
+
 </style>

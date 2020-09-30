@@ -5,8 +5,8 @@
       <div class="title-container">
         <h1>Escolha a geração POKEMON!</h1>
       </div>
-      <form @click="toogle=true">
-        <select @click="feachGeneration(generation)" v-model="generation">
+      <form>
+        <select @input="toogle=true" @click="feachGeneration(generation)" v-model="generation">
           <option v-for="(item, index) in pokeapi" :key="index" :value="index+1">
             {{item.name}}
           </option>
@@ -15,23 +15,29 @@
     </header>
     <main v-if="toogle" class="form-container">
       <section class="api-region">
-        <h2>Região dessa geração: </h2>
+        <h2>Região predominante: </h2>
        <h3>{{ region ? region.name : '' }}</h3>
       </section>
       <section class="api-body">
-        <div v-if="abilities.length!==0" class="api-abilities">
+        <div class="api-abilities">
           <h2>Habilidades incluídas: </h2>
           <ul>
-            <li v-for="(abilitie, index) in abilities" :key="index">
-              {{index+1}} | {{abilitie.name}}
+            <li class="list-abilities" v-for="(abilitie, index) in abilities" :key="index">
+              <tr>
+                <td>{{index+1}}</td>
+                <td>{{abilitie.name}}</td>
+              </tr> 
             </li>
           </ul>
         </div>
         <div class="api-pokemons">
           <h2>Pokemons incluídos: </h2>
           <ul>
-            <li v-for="(pokemon, index) in pokemons" :key="index">
-              {{index+1}} | {{pokemon.name}}
+            <li class="list-pokemons" v-for="(pokemon, index) in pokemons" :key="index">
+              <tr>
+                <td>{{index+1}}</td>
+                <td>{{pokemon.name}}</td>
+              </tr>
             </li>
           </ul>
         </div>
@@ -55,6 +61,7 @@ export default {
   data(){
     return{
       toogle: false,
+      toogleAbilitie: false,
       pokeapi: [],
       item:'',
       generation:'',
@@ -89,7 +96,6 @@ export default {
       const data = await fetch("https://pokeapi.co/api/v2/generation")
       .then( res => res.json())
       .then( res => {
-        console.log(res.results)
       this.pokeapi = res.results
       })
       return data
@@ -99,8 +105,7 @@ export default {
         const data = await fetch(`https://pokeapi.co/api/v2/generation/${id}`)
         .then( res => res.json())
         .then( res => {
-          this.bodyGeneration = res
-          console.log(this.bodyGeneration)
+          this.bodyGeneration = res;
         })
         return data
       }else{
@@ -115,6 +120,13 @@ export default {
 </script>
 
 <style scoped>
+.body-container{
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 .title-container>h1{
   padding: 2rem 1rem;
   color: #633106;
@@ -146,8 +158,71 @@ option{
 .form-container{
   background: rgb(255,228,181);
 }
+.api-region{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 4rem 1rem;
+}
+.api-region>h2{
+  color: #633106;
+}
+.api-region>h3{
+  padding-left: 2rem;
+  font-size: 2rem;
+  text-transform: uppercase;
+  animation: region 2000ms infinite ease-in-out alternate;
+}
+@keyframes region {
+  to{
+    color: #DF9300;
+  }
+  from{
+    color: #FEF6A3;
+    text-shadow: 2px 2px 5px #633106;
+  }
+}
 .api-body{
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap;
+  margin: 2rem;
+}
+.api-body h2{
+  color: #633106;
+  margin: 3rem auto;
+}
+.list-abilities>tr{
+  width: 100%;
+  display: flex;
+}
+.list-abilities>tr>td{
+  width: 50%;
+  padding: 15px 10px;
+  text-transform: uppercase;
+}
+.list-abilities>tr>td:nth-child(1){
+  text-align: center;
+}
+.list-abilities:nth-child(odd){
+  background: rgba(0,0,0,0.5);
+  color: #FEF6A4;
+}
+
+.list-pokemons>tr{
+  width: 100%;
+  display: flex;
+}
+.list-pokemons>tr>td{
+  width: 50%;
+  padding: 15px 10px;
+  text-transform: uppercase;
+}
+.list-pokemons>tr>td:nth-child(1){
+  text-align: center;
+}
+.list-pokemons:nth-child(odd){
+  background: rgba(0,0,0,0.5);
+  color: #FEF6A4;
 }
 </style>
