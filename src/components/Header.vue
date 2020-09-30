@@ -24,7 +24,7 @@ export default {
 .header-container{
   width: 100%;
   box-sizing: border-box;
-  background: linear-gradient(to top, rgb(255,215,0) 40%, rgb(255,255,0) 50%, rgb(255,215,0) 60%);
+  background: linear-gradient(to top, rgb(255,215,0), rgb(255,255,0));
   padding: 20px;
   display: flex;
   justify-content: center;
